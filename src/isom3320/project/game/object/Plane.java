@@ -1,6 +1,7 @@
 package isom3320.project.game.object;
 
 import isom3320.project.game.GamePanel;
+import isom3320.project.game.scene.Scene1;
 import isom3320.project.game.utiliy.Multimedia;
 
 import java.awt.Graphics2D;
@@ -81,6 +82,9 @@ public class Plane extends GameObject {
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			right = false;
 		}		
+		if(e.getKeyCode() == KeyEvent.VK_A) {
+			Scene1.bullet.add(new Bullet(xPosition + width / 2, yPosition + 2));
+		}
 	}
 
 	@Override

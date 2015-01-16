@@ -34,6 +34,22 @@ abstract public class GameObject {
 		this.yPosition = yPosition;
 	}
 
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
 	abstract public void draw(Graphics2D g2d);
 	
 	abstract public void update();

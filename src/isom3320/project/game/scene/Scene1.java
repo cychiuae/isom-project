@@ -1,6 +1,7 @@
 package isom3320.project.game.scene;
 
 import isom3320.project.game.GamePanel;
+import isom3320.project.game.object.Bullet;
 import isom3320.project.game.object.GameObject;
 import isom3320.project.game.object.Plane;
 import isom3320.project.game.utiliy.Multimedia;
@@ -9,6 +10,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Scene1 extends Scene {
 	
@@ -18,9 +20,11 @@ public class Scene1 extends Scene {
 	private BufferedImage bgImg;
 	private int move;
 	private int speed;
+	public static ArrayList<Bullet> bullet;
 	
 	public Scene1() {
 		currentOption = 0;
+		bullet = new ArrayList<Bullet>();
 		init();
 	}
 
@@ -40,6 +44,9 @@ public class Scene1 extends Scene {
 	public void update() {
 		// TODO Auto-generated method stub
 		for(GameObject gameObject : children) {
+			gameObject.update();
+		}
+		for(GameObject gameObject : bullet) {
 			gameObject.update();
 		}
 	}
@@ -64,6 +71,10 @@ public class Scene1 extends Scene {
 			gameObject.draw(g2d);
 		}
 		
+		for(GameObject gameObject : bullet) {
+			gameObject.draw(g2d);
+		}
+		
 		g2d.drawString("Scene", GamePanel.WIDTH / 2, 10);
 	}
 
@@ -84,6 +95,7 @@ public class Scene1 extends Scene {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
+		
 		for(GameObject gameObject : children) {
 			gameObject.keyPressed(e);
 		}
