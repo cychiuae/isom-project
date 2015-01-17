@@ -8,10 +8,7 @@ import javax.swing.JFrame;
 public class Game {
 	public static void main(String[] args) {
 		JFrame GameFrame = new JFrame("Game Panel");
-		GameFrame.add(new GamePanel());
-		GameFrame.setMaximumSize(new Dimension(GamePanel.WIDTH, GamePanel.HEIGHT));
-		GameFrame.setMinimumSize(new Dimension(GamePanel.WIDTH, GamePanel.HEIGHT));
-		GameFrame.setPreferredSize(new Dimension(GamePanel.WIDTH, GamePanel.HEIGHT));
+		GameFrame.setContentPane(new GamePanel());
 		GameFrame.setLocationRelativeTo(null);
 		GameFrame.setResizable(false);
 		GameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

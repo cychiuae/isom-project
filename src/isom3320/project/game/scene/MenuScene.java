@@ -1,6 +1,7 @@
 package isom3320.project.game.scene;
 
 import isom3320.project.game.GamePanel;
+import isom3320.project.game.TileMap.Background;
 import isom3320.project.game.object.GameObject;
 import isom3320.project.game.scene.SceneManager.SceneLevel;
 import isom3320.project.game.utiliy.Multimedia;
@@ -12,9 +13,14 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 public class MenuScene extends Scene {
+	private Background background;
+	
 	private int currentOption;
 	private String[] menuOption;
-	private BufferedImage bgImg;
+	
+	private Color titleColor;
+	private Font titleFont;
+	private Font font;
 	
 	public MenuScene() {
 		currentOption = 0;
@@ -22,54 +28,49 @@ public class MenuScene extends Scene {
 				"Start",
 				"Quit"
 		};
-		init();
+		
+		try {
+			background = new Background("menubg.gif", 1);
+			background.setVector(-0.1, 0);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		titleColor = new Color(128, 0, 0);
+		titleFont = new Font("Century Gothic", Font.PLAIN, 28);
+		font = new Font("Arial", Font.PLAIN, 12);
 	}
 
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
-		bgImg = Multimedia.getImageByName("water.png");
 	}
 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		
+		background.update();
 	}
 
 	@Override
 	public void draw(Graphics2D g2d) {
 		// TODO Auto-generated method stub
-		int imgWidth = bgImg.getWidth();
-		int imgHeight = bgImg.getHeight();
-		int numOfImgInRow = GamePanel.WIDTH / imgWidth;
-		int numOfImgInCol = GamePanel.HEIGHT / imgHeight;
+		background.draw(g2d);
 		
-		for(int i = 0; i < numOfImgInCol; i++) {
-			for(int j = 0; j < numOfImgInRow; j++) {
-				g2d.drawImage(bgImg, j * imgWidth, i * imgHeight, imgWidth, imgHeight, null);
-			}
-		}
+		g2d.setColor(titleColor);
+		g2d.setFont(titleFont);
+		g2d.drawString("HIHIHI GAME", 80, 70);
 		
-		for(GameObject gameObject : children) {
-			gameObject.draw(g2d);
-		}
-		
-		Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 36);
-		g2d.setFont(font);
-		g2d.drawString("MENU SCENE", GamePanel.WIDTH / 3, 36);
-		
-		font = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
 		g2d.setFont(font);
 		for(int i = 0; i < menuOption.length; i++) {
 			if(i == currentOption) {
-				g2d.setColor(Color.yellow);
+				g2d.setColor(Color.BLACK);
 			}
 			else {
-				g2d.setColor(Color.black);
+				g2d.setColor(Color.RED);
 			}
-			
-			g2d.drawString(menuOption[i], GamePanel.WIDTH / 2 - 11, GamePanel.HEIGHT / 2 + i * 20);
+			g2d.drawString(menuOption[i], 145, 140 + i * 15);
 		}
 	}
 
@@ -81,9 +82,14 @@ public class MenuScene extends Scene {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
 		if(e.getKeyCode() == KeyEvent.VK_UP) {
 			currentOption--;
-			if(currentOption < 0) {
+			if(currentOption == -1) {
 				currentOption = menuOption.length - 1;
 			}
 		}
@@ -93,7 +99,6 @@ public class MenuScene extends Scene {
 				currentOption = 0;
 			}
 		}
-		
 		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if(currentOption == menuOption.length - 1) {
 				System.exit(0);
@@ -102,11 +107,6 @@ public class MenuScene extends Scene {
 				SceneManager.getInstance().changeScene(SceneLevel.LEVEL1);
 			}
 		}
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 

@@ -1,13 +1,27 @@
 package isom3320.project.game.scene;
 
+import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
 public class SceneManager {
 	private static SceneManager instance;
 	public static enum SceneLevel {
-		MENU,
-		LEVEL1
+		MENU(0),
+		LEVEL1(1);
+		
+		private int level;
+		
+		private SceneLevel(int level) {
+			this.level = level;
+		}
+		
+		public int value() {
+			return level;
+		}
 	};
 	
-	private Scene currentScene;
+	private ArrayList<Scene> scenes;
 	private SceneLevel currentSceneLevel;
 	
 	public static SceneManager getInstance() {
@@ -18,8 +32,10 @@ public class SceneManager {
 	}
 	
 	private SceneManager() {
-		currentSceneLevel = SceneLevel.LEVEL1;
-		currentScene = new MenuScene();
+		scenes = new ArrayList<Scene>();
+		currentSceneLevel = SceneLevel.MENU;
+		scenes.add(new MenuScene());
+		scenes.add(new Scene1());
 	}
 	
 	public SceneLevel getCurrentSceneLevel() {
@@ -27,14 +43,31 @@ public class SceneManager {
 	}
 	
 	public Scene getCurrentScene() {
-		return currentScene;
+		return scenes.get(currentSceneLevel.value());
 	}
 	
 	public void changeScene(SceneLevel sceneLevel) {
 		currentSceneLevel = sceneLevel;
-		if(currentSceneLevel == SceneLevel.LEVEL1) {
-			currentScene = null;
-			currentScene = new Scene1();
-		}
+		scenes.get(currentSceneLevel.value()).init();
+	}
+	
+	public void update() {
+		scenes.get(currentSceneLevel.value()).update();
+	}
+	
+	public void draw(Graphics2D g2d) {
+		scenes.get(currentSceneLevel.value()).draw(g2d);
+	}
+	
+	public void keyTyped(KeyEvent e) {
+		scenes.get(currentSceneLevel.value()).keyTyped(e);
+	}
+
+	public void keyPressed(KeyEvent e) {
+		scenes.get(currentSceneLevel.value()).keyPressed(e);
+	}
+
+	public void keyReleased(KeyEvent e) {
+		scenes.get(currentSceneLevel.value()).keyReleased(e);
 	}
 }
