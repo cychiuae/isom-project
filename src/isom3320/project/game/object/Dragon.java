@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Dragon extends GameObject {
+public class Dragon extends Character {
 	private int hp;
 	private int maxHp;
 	private int fire;
@@ -115,6 +115,31 @@ public class Dragon extends GameObject {
 		gliding = b;
 	}
 
+	public void checkAttack(ArrayList<Enemy> enemies) {
+		for(int i = 0; i < enemies.size(); i++) {
+			Enemy e = enemies.get(i);
+			if(scratching) {
+				if(facingRight) {
+					if(e.getXPosition() > xPosition && e.getXPosition() < xPosition + scratchRange && e.getYPosition() > yPosition - height / 2 && e.getYPosition() < yPosition + height / 2) {
+						e.hit(scratchDamage);
+					}
+				}
+				else {
+					if(e.getXPosition() < xPosition && e.getXPosition() > xPosition - scratchRange && e.getYPosition() > yPosition - height / 2 && e.getYPosition() < yPosition + height / 2) {
+						e.hit(scratchDamage);
+					}
+				}
+			}
+			
+			for(int j = 0; j < fireBalls.size(); j++) {
+				if(fireBalls.get(j).intersects(e)) {
+					e.hit(fireBallDamage);
+					fireBalls.get(j).setHit();
+				}
+			}
+		}
+	}
+
 	private void getNextPosition() {
 		if(left) {
 			dx -= moveSpeed;
@@ -176,7 +201,7 @@ public class Dragon extends GameObject {
 	public void update() {
 		//TODO: IF the hero fall out of frame, the program will crash
 		//TODO: Fix it
-		
+
 		getNextPosition();
 		checkTileMapCollision();
 		setPosition(xTemp, yTemp);
@@ -199,12 +224,12 @@ public class Dragon extends GameObject {
 				flinching = false;
 			}
 		}
-		
+
 		fire++;
 		if(fire >= maxFire) {
 			fire = maxFire;
 		}
-		
+
 		if(firing && currentAction != FIREBALL) {
 			if(fire > fireCost) {
 				fire -= fireCost;
@@ -213,7 +238,7 @@ public class Dragon extends GameObject {
 				fireBalls.add(fireBall);
 			}
 		}
-		
+
 		Iterator<FireBall> it = fireBalls.iterator();
 		while(it.hasNext()) {
 			FireBall fb = it.next();
@@ -299,7 +324,7 @@ public class Dragon extends GameObject {
 		for(int i = 0; i < fireBalls.size(); i++) {
 			fireBalls.get(i).draw(g2d);
 		}
-		
+
 		if(flinching) {
 			long elapsed =
 					(System.nanoTime() - flinchTimer) / 1000000;
@@ -308,12 +333,7 @@ public class Dragon extends GameObject {
 			}
 		}
 
-		if(facingRight) {
-			g2d.drawImage(animation.getImage(), (int)(xPosition + xMapPosition - width / 2), (int)(yPosition + yMapPosition - height / 2), null);
-		}
-		else {
-			g2d.drawImage(animation.getImage(), (int)(xPosition + xMapPosition - width / 2 + width), (int)(yPosition + yMapPosition - height / 2), -width, height, null);
-		}
+		super.draw(g2d);
 	}
 
 	@Override

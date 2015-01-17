@@ -15,8 +15,9 @@ public class FireBall extends GameObject {
 	
 	public FireBall(TileMap tm, boolean right) {
 		super(tm);
-		
+		facingRight = right;
 		moveSpeed = 3.8;
+		
 		if(right) {
 			dx = moveSpeed;
 		}
