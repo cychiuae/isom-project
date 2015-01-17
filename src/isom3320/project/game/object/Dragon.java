@@ -137,7 +137,28 @@ public class Dragon extends Character {
 					fireBalls.get(j).setHit();
 				}
 			}
+			
+			if(intersects(e)) {
+				hit(e.getDamage());
+			}
+		}	
+	}
+	
+	public void hit(int damage) {
+		if(flinching) {
+			return;
 		}
+		
+		hp -= damage;
+		if(hp < 0) {
+			hp = 0;
+		}
+		if(hp == 0) {
+			isDead = true;
+		}
+		
+		flinching = true;
+		flinchTimer = System.nanoTime();
 	}
 
 	private void getNextPosition() {
