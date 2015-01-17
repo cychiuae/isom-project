@@ -2,6 +2,7 @@ package isom3320.project.game.scene;
 
 import isom3320.project.game.GamePanel;
 import isom3320.project.game.TileMap.Background;
+import isom3320.project.game.object.FireBall;
 import isom3320.project.game.object.GameObject;
 import isom3320.project.game.scene.SceneManager.SceneLevel;
 import isom3320.project.game.utiliy.Multimedia;
@@ -72,6 +73,7 @@ public class MenuScene extends Scene {
 			}
 			g2d.drawString(menuOption[i], 145, 140 + i * 15);
 		}
+		
 	}
 
 	@Override

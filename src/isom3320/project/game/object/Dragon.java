@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Dragon extends GameObject {
 	private int hp;
@@ -20,7 +21,7 @@ public class Dragon extends GameObject {
 	private boolean firing;
 	private int fireCost;
 	private int fireBallDamage;
-	//private ArrayList<FireBall> fireBalls;
+	private ArrayList<FireBall> fireBalls;
 
 	private boolean scratching;
 	private int scratchDamage;
@@ -64,7 +65,7 @@ public class Dragon extends GameObject {
 
 		fireCost = 200;
 		fireBallDamage = 5;
-		//fireBalls = new ArrayList<FireBall>();
+		fireBalls = new ArrayList<FireBall>();
 
 		scratchDamage = 8;
 		scratchRange = 40;
@@ -173,6 +174,9 @@ public class Dragon extends GameObject {
 	}
 
 	public void update() {
+		//TODO: IF the hero fall out of frame, the program will crash
+		//TODO: Fix it
+		
 		getNextPosition();
 		checkTileMapCollision();
 		setPosition(xTemp, yTemp);
@@ -190,10 +194,32 @@ public class Dragon extends GameObject {
 		}
 
 		if(flinching) {
-			long elapsed =
-					(System.nanoTime() - flinchTimer) / 1000000;
+			long elapsed = (System.nanoTime() - flinchTimer) / 1000000;
 			if(elapsed > 1000) {
 				flinching = false;
+			}
+		}
+		
+		fire++;
+		if(fire >= maxFire) {
+			fire = maxFire;
+		}
+		
+		if(firing && currentAction != FIREBALL) {
+			if(fire > fireCost) {
+				fire -= fireCost;
+				FireBall fireBall = new FireBall(tileMap, facingRight);
+				fireBall.setPosition(xPosition, yPosition);
+				fireBalls.add(fireBall);
+			}
+		}
+		
+		Iterator<FireBall> it = fireBalls.iterator();
+		while(it.hasNext()) {
+			FireBall fb = it.next();
+			fb.update();
+			if(fb.shoudlRemove()) {
+				it.remove();
 			}
 		}
 
@@ -254,7 +280,6 @@ public class Dragon extends GameObject {
 				width = 30;
 			}
 		}
-
 		animation.update();
 
 		if(currentAction != SCRATCHING && currentAction != FIREBALL) {
@@ -268,9 +293,13 @@ public class Dragon extends GameObject {
 
 	}
 
-	public void draw(Graphics2D g) {
+	public void draw(Graphics2D g2d) {
 		setMapPosition();
 
+		for(int i = 0; i < fireBalls.size(); i++) {
+			fireBalls.get(i).draw(g2d);
+		}
+		
 		if(flinching) {
 			long elapsed =
 					(System.nanoTime() - flinchTimer) / 1000000;
@@ -280,10 +309,10 @@ public class Dragon extends GameObject {
 		}
 
 		if(facingRight) {
-			g.drawImage(animation.getImage(), (int)(xPosition + xMapPosition - width / 2), (int)(yPosition + yMapPosition - height / 2), null);
+			g2d.drawImage(animation.getImage(), (int)(xPosition + xMapPosition - width / 2), (int)(yPosition + yMapPosition - height / 2), null);
 		}
 		else {
-			g.drawImage(animation.getImage(), (int)(xPosition + xMapPosition - width / 2 + width), (int)(yPosition + yMapPosition - height / 2), -width, height, null);
+			g2d.drawImage(animation.getImage(), (int)(xPosition + xMapPosition - width / 2 + width), (int)(yPosition + yMapPosition - height / 2), -width, height, null);
 		}
 	}
 
@@ -316,6 +345,9 @@ public class Dragon extends GameObject {
 		}
 		if(k.getKeyCode() == KeyEvent.VK_E) {
 			gliding = true;
+		}
+		if(k.getKeyCode() == KeyEvent.VK_F) {
+			firing = true;
 		}
 	}
 

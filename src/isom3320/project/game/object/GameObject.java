@@ -90,6 +90,9 @@ public abstract class GameObject {
 	}
 
 	public void checkTileMapCollision() {
+		//TODO: IF the hero fall out of frame, the program will crash
+		//TODO: Fix it
+		
 		currentCol = (int)xPosition / tileSize;
 		currentRow = (int)yPosition / tileSize;
 

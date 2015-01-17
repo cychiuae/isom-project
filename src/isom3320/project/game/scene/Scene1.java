@@ -1,8 +1,10 @@
 package isom3320.project.game.scene;
 
+import isom3320.project.game.GamePanel;
 import isom3320.project.game.TileMap.Background;
 import isom3320.project.game.TileMap.TileMap;
 import isom3320.project.game.object.Dragon;
+import isom3320.project.game.object.FireBall;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -34,6 +36,8 @@ public class Scene1 extends Scene {
 	public void update() {
 		// TODO Auto-generated method stub
 		dragon.update();
+		tileMap.setPosition(GamePanel.WIDTH / 2 - dragon.getXPosition(), GamePanel.HEIGHT / 2 - dragon.getYPosition());
+		background.setPosition(tileMap.getXPosition(), tileMap.getYPosition());
 	}
 
 	@Override
