@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class Tile {
 	final public static int NORMAL = 0;
-	final public static int BLOCK = 1;
+	final public static int BLOCKED = 1;
 	
 	private BufferedImage image;
 	private int type;

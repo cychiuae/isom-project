@@ -1,6 +1,5 @@
 package isom3320.project.game.TileMap;
 
-import isom3320.project.game.Game;
 import isom3320.project.game.GamePanel;
 import isom3320.project.game.utiliy.Multimedia;
 
@@ -14,39 +13,33 @@ public class Background {
 	private double dx;
 	private double dy;
 	private double moveScale;
-	
+
 	public Background(String imageName, double moveScale) {
-		try {
-			image = Multimedia.getImageByName(imageName);
-		}
-		catch(Exception e) {
-			System.out.println(e);
-		}
-		
+		image = Multimedia.getImageByName(imageName);
 		this.moveScale = moveScale;
 	}
-	
+
 	public void setPosition(double xPos, double yPos) {
 		xPosition = (xPos * moveScale) % GamePanel.WIDTH;
 		yPosition = (yPos * moveScale) % GamePanel.HEIGHT;
 	}
-	
+
 	public void setVector(double dx, double dy) {
 		this.dx = dx;
 		this.dy = dy;
 	}
-	
+
 	public void update() {
 		xPosition += dx;
 		yPosition += dy;
-		
+
 		xPosition = (xPosition * moveScale) % GamePanel.WIDTH;
 		yPosition = (yPosition * moveScale) % GamePanel.HEIGHT;
 	}
-	
+
 	public void draw(Graphics2D g2d) {
 		g2d.drawImage(image, (int)xPosition, (int)yPosition, null);
-		
+
 		if(xPosition < 0) {
 			g2d.drawImage(image, (int)xPosition + GamePanel.WIDTH, (int)yPosition, null);
 		}

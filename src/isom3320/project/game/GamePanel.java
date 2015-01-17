@@ -25,7 +25,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	private Thread thread;
 	private boolean running;
 	private int FPS = 60;
-	private long targetTime = 1000 / 60;
+	private long targetTime = 1000 / FPS;
 	
 	private BufferedImage image;
 	private Graphics2D g2d;
@@ -48,10 +48,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	}
 	
 	private void init() {
-		sceneManager = SceneManager.getInstance();
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g2d = (Graphics2D) image.getGraphics();
 		running = true;
+		sceneManager = SceneManager.getInstance();
 	}
 
 	@Override
@@ -74,7 +74,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			
 			wait = targetTime - elapsed / 1000000;
 			
-			wait = wait < 0 ? 5 : wait;
+			if(wait < 0) 
+				wait = 5;
 			
 			try {
 				Thread.sleep(wait);
