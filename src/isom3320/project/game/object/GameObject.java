@@ -169,11 +169,11 @@ public abstract class GameObject {
 		return height;
 	}
 
-	public int getCWidth() { 
+	public int getCollisionWidth() { 
 		return collisionWidth; 
 	}
 
-	public int getCHeight() { 
+	public int getCollisionHeight() { 
 		return collisionHeight; 
 	}
 
@@ -228,19 +228,3 @@ public abstract class GameObject {
 	
 	abstract public void keyReleased(KeyEvent k);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
