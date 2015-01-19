@@ -10,13 +10,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Dragon extends Character {
-	private int hp;
-	private int maxHp;
 	private int fire;
 	private int maxFire;
-	private boolean isDead;
-	private boolean flinching;
-	private long flinchTimer;
 
 	private boolean firing;
 	private int fireCost;
@@ -31,7 +26,7 @@ public class Dragon extends Character {
 
 	private ArrayList<BufferedImage[]> sprites;
 	private final int[] numFrames = {
-			2, 8, 1, 2, 4, 2, 5
+		2, 8, 1, 2, 4, 2, 5
 	};
 
 	private static final int IDLE = 0;
@@ -92,12 +87,7 @@ public class Dragon extends Character {
 		animation.setFrames(sprites.get(IDLE));
 		animation.setDelay(400);
 	}
-
-	public int getHp() { 
-		return hp; 
-	}
-	public int getMaxHp() { 
-		return maxHp; }
+	
 	public int getFire() {
 		return fire; 
 	}
@@ -347,8 +337,7 @@ public class Dragon extends Character {
 		}
 
 		if(flinching) {
-			long elapsed =
-					(System.nanoTime() - flinchTimer) / 1000000;
+			long elapsed = (System.nanoTime() - flinchTimer) / 1000000;
 			if(elapsed / 100 % 2 == 0) {
 				return;
 			}
@@ -374,17 +363,15 @@ public class Dragon extends Character {
 		}
 		if(k.getKeyCode() == KeyEvent.VK_UP) {
 			up = true;
+			jumping = true;
 		}
 		if(k.getKeyCode() == KeyEvent.VK_DOWN) {
 			down = true;
 		}
-		if(k.getKeyCode() == KeyEvent.VK_W) {
-			jumping = true;
-		}
 		if(k.getKeyCode() == KeyEvent.VK_R){
 			scratching = true;
 		}
-		if(k.getKeyCode() == KeyEvent.VK_E) {
+		if(k.getKeyCode() == KeyEvent.VK_SPACE) {
 			gliding = true;
 		}
 		if(k.getKeyCode() == KeyEvent.VK_F) {
@@ -403,17 +390,15 @@ public class Dragon extends Character {
 		}
 		if(k.getKeyCode() == KeyEvent.VK_UP) {
 			up = false;
+			jumping = false;
 		}
 		if(k.getKeyCode() == KeyEvent.VK_DOWN) {
 			down = false;
 		}
-		if(k.getKeyCode() == KeyEvent.VK_W) {
-			jumping = false;
-		}
 		if(k.getKeyCode() == KeyEvent.VK_R){
 			scratching = false;
 		}
-		if(k.getKeyCode() == KeyEvent.VK_E) {
+		if(k.getKeyCode() == KeyEvent.VK_SPACE) {
 			gliding = false;
 		}
 	}

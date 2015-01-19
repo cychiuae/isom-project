@@ -15,7 +15,7 @@ public class Score {
 	}
 	
 	public void addScore(int score) {
-		this.score = score;
+		this.score += score;
 	}
 	
 	public String getPlayerName() {

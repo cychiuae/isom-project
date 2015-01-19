@@ -5,6 +5,7 @@ import isom3320.project.game.TileMap.Background;
 import isom3320.project.game.object.FireBall;
 import isom3320.project.game.object.GameObject;
 import isom3320.project.game.scene.SceneManager.SceneLevel;
+import isom3320.project.game.score.ScoreSystem;
 import isom3320.project.game.utiliy.Multimedia;
 
 import java.awt.Color;
@@ -27,6 +28,8 @@ public class MenuScene extends Scene {
 		currentOption = 0;
 		menuOption = new String[] {
 				"Start",
+				"High Score",
+				"Help",
 				"Quit"
 		};
 		
@@ -63,19 +66,28 @@ public class MenuScene extends Scene {
 		g2d.setFont(titleFont);
 		g2d.drawString("HIHIHI GAME", 80, 70);
 		
-		g2d.setFont(font);
-		for(int i = 0; i < menuOption.length; i++) {
-			if(i == currentOption) {
-				g2d.setColor(Color.BLACK);
-			}
-			else {
-				g2d.setColor(Color.RED);
-			}
-			g2d.drawString(menuOption[i], 145, 140 + i * 15);
-		}
-		
+		drawOptions(g2d);
 	}
 
+	public void drawOptions(Graphics2D g2d) {
+		g2d.setFont(font);
+		
+		for(int i = 0; i < menuOption.length; i++) {
+			if(i == currentOption) {
+				g2d.setColor(Color.RED);
+			}
+			else {
+				g2d.setColor(Color.BLACK);
+			}
+			if( i == 1) {
+				g2d.drawString(menuOption[i], 130, 140 + i * 15);
+			}
+			else {
+				g2d.drawString(menuOption[i], 145, 140 + i * 15);
+			}	
+		}		
+	}
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -103,10 +115,17 @@ public class MenuScene extends Scene {
 		}
 		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if(currentOption == menuOption.length - 1) {
+				ScoreSystem.getInstance().saveScoreFile();
 				System.exit(0);
 			}
 			else if(currentOption == 0) {
 				SceneManager.getInstance().changeScene(SceneLevel.LEVEL1);
+			}
+			else if(currentOption == 1) {
+				SceneManager.getInstance().changeScene(SceneLevel.HIGHESTSCORE);
+			}
+			else if(currentOption == 2) {
+				
 			}
 		}
 		

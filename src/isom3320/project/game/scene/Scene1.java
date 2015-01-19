@@ -4,12 +4,19 @@ import isom3320.project.game.GamePanel;
 import isom3320.project.game.HUD;
 import isom3320.project.game.TileMap.Background;
 import isom3320.project.game.TileMap.TileMap;
+import isom3320.project.game.object.Boss;
 import isom3320.project.game.object.Dragon;
 import isom3320.project.game.object.Enemy;
 import isom3320.project.game.object.Explosion;
 import isom3320.project.game.object.FireBall;
 import isom3320.project.game.object.Slugger;
+import isom3320.project.game.scene.SceneManager.SceneLevel;
+import isom3320.project.game.score.Score;
+import isom3320.project.game.score.ScoreSystem;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
@@ -21,10 +28,22 @@ public class Scene1 extends Scene {
 	private Background background;
 	private HUD hud;
 	private Dragon dragon;
+	
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Explosion> explosions;
-	
+
+	private Score score;
+	private Font font;
+
+	private int currentOption;
+	private String[] menuOption;
+
+	private boolean inited;
+	private boolean stop;
+
 	public Scene1() {
+		inited = false;
+		stop = false;
 		init();
 	}
 
@@ -39,22 +58,38 @@ public class Scene1 extends Scene {
 		background = new Background("grassbg1.gif", 0.1);
 		dragon = new Dragon(tileMap);
 		dragon.setPosition(100, 100);
-		
+
 		populateEnemies();
-		
-		hud = new HUD(dragon);
+
 		explosions = new ArrayList<Explosion>();
+
+		score = new Score("Player", 0);
+		hud = new HUD(dragon);
+		hud.setScore(score);
+
+		font = new Font("Arial", Font.PLAIN, 12);
+
+		currentOption = 0;
+		menuOption = new String[] {
+				"Resume",
+				"Quit"
+		};
+
+		if(inited) {
+			ScoreSystem.getInstance().addScoreRecord(score);
+		}
+		inited = true;
 	}
-	
+
 	public void populateEnemies() {
 		enemies = new ArrayList<Enemy>();
 		Slugger s;
 		Point[] points = new Point[] {
-			new Point(200, 100),
-			new Point(860, 200),
-			new Point(1525, 200),
-			new Point(1680, 200),
-			new Point(1800, 200)
+				new Point(200, 100),
+				new Point(860, 200),
+				new Point(1525, 200),
+				new Point(1680, 200),
+				new Point(1800, 200)
 		};
 		for(int i = 0; i < points.length; i++) {
 			s = new Slugger(tileMap);
@@ -66,16 +101,21 @@ public class Scene1 extends Scene {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
+		if(stop) {
+			return;
+		}
+
 		dragon.update();
 		tileMap.setPosition(GamePanel.WIDTH / 2 - dragon.getXPosition(), GamePanel.HEIGHT / 2 - dragon.getYPosition());
 		background.setPosition(tileMap.getXPosition(), tileMap.getYPosition());
-		
+
 		dragon.checkAttack(enemies);
-		
+
 		for(int i = 0; i < enemies.size(); i++) {
 			Enemy e = enemies.get(i);
 			e.update();
 			if(e.isDead()) {
+				score.addScore(1);
 				enemies.remove(i);
 				i--;
 				explosions.add(new Explosion(e.getXPosition(), e.getYPosition()));
@@ -97,6 +137,7 @@ public class Scene1 extends Scene {
 		background.draw(g2d);
 		tileMap.draw(g2d);
 		dragon.draw(g2d);
+		
 		for(int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).draw(g2d);
 		}
@@ -104,6 +145,26 @@ public class Scene1 extends Scene {
 			explosions.get(i).draw(g2d);
 		}
 		hud.draw(g2d);
+
+		if(stop) {
+			g2d.setColor(new Color(0.2f, 0.2f, 0.2f, 0.5f));
+			g2d.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
+			drawOptions(g2d);
+		}
+	}
+
+	private void drawOptions(Graphics2D g2d) {
+		g2d.setFont(font);
+
+		for(int i = 0; i < menuOption.length; i++) {
+			if(i == currentOption) {
+				g2d.setColor(Color.RED);
+			}
+			else {
+				g2d.setColor(Color.BLACK);
+			}	
+			g2d.drawString(menuOption[i], 145, 120 + i * 15);
+		}
 	}
 
 	@Override
@@ -122,6 +183,42 @@ public class Scene1 extends Scene {
 	public void keyPressed(KeyEvent k) {
 		// TODO Auto-generated method stub
 		dragon.keyPressed(k);
+
+		switch(k.getKeyCode()) {
+			case KeyEvent.VK_ESCAPE:
+				stop = !stop;
+				if(stop) {
+					currentOption = 0;
+				}
+				break;
+			case KeyEvent.VK_UP:
+				if(stop) {
+					currentOption--;
+					if(currentOption == -1) {
+						currentOption = menuOption.length - 1;
+					}
+				}
+				break;
+			case KeyEvent.VK_DOWN:
+				if(stop) {
+					currentOption++;
+					if(currentOption >= menuOption.length) {
+						currentOption = 0;
+					}
+				}
+				break;
+				
+			case KeyEvent.VK_ENTER:
+				if(stop) {
+					if(currentOption == 0) {
+						stop = !stop;
+					}
+					if(currentOption == 1) {
+						SceneManager.getInstance().changeScene(SceneLevel.MENU);
+					}
+				}
+				break;
+		}
 	}
 
 }

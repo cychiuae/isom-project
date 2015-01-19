@@ -6,12 +6,29 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
 abstract public class Character extends GameObject {
-
+	protected int hp;
+	protected int maxHp;
+	protected boolean flinching;
+	protected long flinchTimer;
+	
+	protected boolean isDead;
+	
 	public Character(TileMap tm) {
 		super(tm);
 		// TODO Auto-generated constructor stub
 	}
 
+	public int getHp() { 
+		return hp; 
+	}
+	public int getMaxHp() { 
+		return maxHp; 
+	}
+	
+	public boolean isDead() {
+		return isDead;
+	}
+	
 	@Override
 	public void draw(Graphics2D g2d) {
 		// TODO Auto-generated method stub

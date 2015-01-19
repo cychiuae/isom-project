@@ -6,10 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
 abstract public class Enemy extends Character {
-
-	protected int hp;
-	protected int maxHp;
-	protected boolean isDead;
 	protected int damage;
 	
 	protected boolean flinching;
@@ -17,10 +13,6 @@ abstract public class Enemy extends Character {
 	
 	public Enemy(TileMap tm) {
 		super(tm);
-	}
-
-	public boolean isDead() {
-		return isDead;
 	}
 	
 	public int getDamage() {

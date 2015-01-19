@@ -3,11 +3,8 @@ package isom3320.project.game.utiliy;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.ByteOrder;
 
 import javax.imageio.ImageIO;
-import javax.imageio.stream.IIOByteBuffer;
-import javax.imageio.stream.ImageInputStream;
 
 public class Multimedia {
 	final public static String resourcesDir = "Resources/";
@@ -26,4 +23,5 @@ public class Multimedia {
 		
 		return image;
 	}
+	
 }
