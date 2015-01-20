@@ -3,7 +3,6 @@ package isom3320.project.game.object;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import isom3320.project.game.TileMap.TileMap;
 import isom3320.project.game.utiliy.Multimedia;
 
 public class Explosion {
