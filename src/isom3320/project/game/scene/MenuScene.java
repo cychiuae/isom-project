@@ -1,18 +1,13 @@
 package isom3320.project.game.scene;
 
-import isom3320.project.game.GamePanel;
 import isom3320.project.game.TileMap.Background;
-import isom3320.project.game.object.FireBall;
-import isom3320.project.game.object.GameObject;
 import isom3320.project.game.scene.SceneManager.SceneLevel;
 import isom3320.project.game.score.ScoreSystem;
-import isom3320.project.game.utiliy.Multimedia;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 
 public class MenuScene extends Scene {
 	private Background background;

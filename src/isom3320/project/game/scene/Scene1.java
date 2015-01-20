@@ -4,17 +4,14 @@ import isom3320.project.game.GamePanel;
 import isom3320.project.game.HUD;
 import isom3320.project.game.TileMap.Background;
 import isom3320.project.game.TileMap.TileMap;
-import isom3320.project.game.object.Boss;
 import isom3320.project.game.object.Dragon;
 import isom3320.project.game.object.Enemy;
 import isom3320.project.game.object.Explosion;
-import isom3320.project.game.object.FireBall;
 import isom3320.project.game.object.Slugger;
 import isom3320.project.game.scene.SceneManager.SceneLevel;
 import isom3320.project.game.score.Score;
 import isom3320.project.game.score.ScoreSystem;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;

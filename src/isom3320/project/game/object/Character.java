@@ -3,7 +3,6 @@ package isom3320.project.game.object;
 import isom3320.project.game.TileMap.TileMap;
 
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 
 abstract public class Character extends GameObject {
 	protected int hp;

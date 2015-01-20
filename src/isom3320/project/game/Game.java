@@ -2,12 +2,9 @@ package isom3320.project.game;
 
 import isom3320.project.game.score.ScoreSystem;
 
-import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
-import javax.swing.JApplet;
 import javax.swing.JFrame;
 
 public class Game {
