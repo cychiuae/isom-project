@@ -9,7 +9,8 @@ public class SceneManager {
 	public static enum SceneLevel {
 		MENU(0),
 		LEVEL1(1),
-		HIGHESTSCORE(2);
+		HIGHESTSCORE(2),
+		GAMEOVER(3);
 		
 		private int level;
 		
@@ -38,6 +39,7 @@ public class SceneManager {
 		scenes.add(new MenuScene());
 		scenes.add(new Scene1());
 		scenes.add(new HighScoreScene());
+		scenes.add(new GameOverScene());
 	}
 	
 	public SceneLevel getCurrentSceneLevel() {

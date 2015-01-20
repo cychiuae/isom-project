@@ -15,12 +15,24 @@ public class Boss extends Enemy {
 	public Boss(TileMap tm) {
 		super(tm);
 		
-		hp = maxHp = 500;
+		moveSpeed = 0.7;
+		maxSpeed = 4;
+		fallSpeed = 0.01;
+		maxFallSpeed = 10.0;
+
+		width = 60;
+		height = 60;
+		collisionHeight = 46;
+		collisionWidth = 58;
+
+		hp = maxHp = 5;
+		damage = 3;
+		
 		right = false;
+		left = true;
 		
 		BufferedImage sprites = Multimedia.getImageByName("plane2_1.png");
-		collisionWidth = width = sprites.getWidth();
-		collisionWidth = height = sprites.getHeight();
+		
 		BufferedImage[] s = new BufferedImage[1];
 		s[0] = sprites;
 		animation = new Animation();
@@ -29,20 +41,40 @@ public class Boss extends Enemy {
 	}
 	
 	private void getNextPosition() {
-		xTemp = 200;
-		long e = (System.nanoTime() - moveTimer) / 100000;
-		if(e > 400) {
-			yTemp -= new Random().nextInt(1) - 14;
-			moveTimer = System.nanoTime();
-		}	
+		if(left) {
+			dx -= moveSpeed;
+			if(dx < -maxSpeed) {
+				dx = -maxSpeed;
+			}
+		}
+		else if(right) {
+			dx += moveSpeed;
+			if(dx > maxSpeed) {
+				dx = maxSpeed;
+			}
+		}
+		
+		if(falling) {
+			dy += fallSpeed;
+		}
 	}
 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
 		getNextPosition();
-		//checkTileMapCollision();
+		checkTileMapCollision();
 		setPosition(xTemp, yTemp);
+		
+		if(right && dx == 0) {
+			facingRight = right = false;
+			left = true;
+		}
+		else if(left && dx == 0) {
+			facingRight = right = true;
+			left = false;
+		}
+		
 		animation.update();
 	}
 	

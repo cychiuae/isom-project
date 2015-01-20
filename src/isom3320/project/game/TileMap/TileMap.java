@@ -171,7 +171,7 @@ public class TileMap {
 				int rc = map[row][col];
 				int r = rc / numTilesAcross;
 				int c = rc % numTilesAcross;
-
+				
 				g2d.drawImage(tiles[r][c].getImage(), (int)xPosition + col * tileSize, (int)yPosition + row * tileSize, null);
 
 			}

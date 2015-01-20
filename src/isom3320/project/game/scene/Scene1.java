@@ -72,6 +72,7 @@ public class Scene1 extends Scene {
 		currentOption = 0;
 		menuOption = new String[] {
 				"Resume",
+				"Restart",
 				"Quit"
 		};
 
@@ -96,6 +97,10 @@ public class Scene1 extends Scene {
 			s.setPosition(points[i].x, points[i].y);
 			enemies.add(s);
 		}
+		
+		Boss b = new Boss(tileMap);
+		b.setPosition(3000, 100);
+		enemies.add(b);
 	}
 
 	@Override
@@ -105,6 +110,10 @@ public class Scene1 extends Scene {
 			return;
 		}
 
+		if(dragon.isDead()) {
+			SceneManager.getInstance().changeScene(SceneLevel.GAMEOVER);
+		}
+		
 		dragon.update();
 		tileMap.setPosition(GamePanel.WIDTH / 2 - dragon.getXPosition(), GamePanel.HEIGHT / 2 - dragon.getYPosition());
 		background.setPosition(tileMap.getXPosition(), tileMap.getYPosition());
@@ -121,6 +130,7 @@ public class Scene1 extends Scene {
 				explosions.add(new Explosion(e.getXPosition(), e.getYPosition()));
 			}
 		}
+		
 		for(int i = 0; i < explosions.size(); i++) {
 			explosions.get(i).update();
 			explosions.get(i).setMapPosition((int)tileMap.getXPosition(), (int)tileMap.getYPosition());
@@ -210,10 +220,11 @@ public class Scene1 extends Scene {
 				
 			case KeyEvent.VK_ENTER:
 				if(stop) {
-					if(currentOption == 0) {
-						stop = !stop;
-					}
+					stop = !stop;
 					if(currentOption == 1) {
+						SceneManager.getInstance().changeScene(SceneLevel.LEVEL1);
+					}
+					if(currentOption == menuOption.length - 1) {
 						SceneManager.getInstance().changeScene(SceneLevel.MENU);
 					}
 				}

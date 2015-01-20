@@ -25,9 +25,7 @@ public class Dragon extends Character {
 	private boolean gliding;
 
 	private ArrayList<BufferedImage[]> sprites;
-	private final int[] numFrames = {
-		2, 8, 1, 2, 4, 2, 5
-	};
+	private final int[] numFrames;
 
 	private static final int IDLE = 0;
 	private static final int WALKING = 1;
@@ -65,8 +63,10 @@ public class Dragon extends Character {
 		scratchDamage = 8;
 		scratchRange = 40;
 
-		BufferedImage spritesheet = Multimedia.getImageByName("playersprites.gif");
-
+		BufferedImage spritesheet = Multimedia.getImageByName("playersprites2.gif");
+		numFrames = new int[] {
+			1, 2, 1, 1, 4, 2, 5
+		};
 		sprites = new ArrayList<BufferedImage[]>();
 		for(int i = 0; i < 7; i++) {
 			BufferedImage[] bi = new BufferedImage[numFrames[i]];
@@ -272,7 +272,7 @@ public class Dragon extends Character {
 			if(currentAction != FIREBALL) {
 				currentAction = FIREBALL;
 				animation.setFrames(sprites.get(FIREBALL));
-				animation.setDelay(100);
+				animation.setDelay(150);
 				width = 30;
 			}
 		}
@@ -304,7 +304,7 @@ public class Dragon extends Character {
 			if(currentAction != WALKING) {
 				currentAction = WALKING;
 				animation.setFrames(sprites.get(WALKING));
-				animation.setDelay(40);
+				animation.setDelay(100);
 				width = 30;
 			}
 		}
@@ -376,6 +376,9 @@ public class Dragon extends Character {
 		}
 		if(k.getKeyCode() == KeyEvent.VK_F) {
 			firing = true;
+		}
+		if(k.getKeyCode() == KeyEvent.VK_D) {
+			isDead = true;
 		}
 	}
 
