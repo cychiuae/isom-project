@@ -4,6 +4,7 @@ import isom3320.project.game.GamePanel;
 import isom3320.project.game.HUD;
 import isom3320.project.game.TileMap.Background;
 import isom3320.project.game.TileMap.TileMap;
+import isom3320.project.game.object.Boss;
 import isom3320.project.game.object.Dragon;
 import isom3320.project.game.object.Enemy;
 import isom3320.project.game.object.Explosion;

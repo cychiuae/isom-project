@@ -6,38 +6,83 @@ import isom3320.project.game.utiliy.Multimedia;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Boss extends Enemy {
+	private int fire;
+	private int maxFire;
 
+	private boolean soulBombing;
+	private int soulBombingDamage;
+	private FireBall soulBomb;
+
+	private boolean bigBanging;
+	private int bigBangDamage;
+	private int bigBangRange;
+
+	private ArrayList<BufferedImage[]> sprites;
+	private final int[] numFrames;
+
+	private static final int WALKING = 0;
+	private static final int SOULBOMB = 1;
+	private static final int BIGBANG = 2;
+	
 	public long moveTimer;
 	
 	public Boss(TileMap tm) {
 		super(tm);
 		
 		moveSpeed = 0.7;
-		maxSpeed = 4;
-		fallSpeed = 0.01;
-		maxFallSpeed = 10.0;
+		maxSpeed = 1.5;
 
-		width = 60;
-		height = 60;
-		collisionHeight = 46;
-		collisionWidth = 58;
+		width = 40;
+		height = 50;
+		collisionWidth = 30;
+		collisionHeight = 40;
 
-		hp = maxHp = 5;
+		hp = maxHp = 50;
 		damage = 3;
+		fire = maxFire = 2500;
+
+		soulBombingDamage = 5;
+		soulBomb = new FireBall(tm, bigBanging);
 		
 		right = false;
 		left = true;
 		
-		BufferedImage sprites = Multimedia.getImageByName("plane2_1.png");
+		BufferedImage spritesheet = Multimedia.getImageByName("boss.gif");
+		numFrames = new int[] {
+			6, 6, 6
+		};
+		sprites = new ArrayList<BufferedImage[]>();
+		for(int i = 0; i < 3; i++) {
+			BufferedImage[] bi = new BufferedImage[numFrames[i]];
+
+			for(int j = 0; j < numFrames[i]; j++) {
+				bi[j] = spritesheet.getSubimage(j * width, i * height, width, height);
+			}
+			sprites.add(bi);
+		}
 		
-		BufferedImage[] s = new BufferedImage[1];
-		s[0] = sprites;
 		animation = new Animation();
-		animation.setFrames(s);
+		currentAction = WALKING;
+		animation.setFrames(sprites.get(WALKING));
 		animation.setDelay(400);
+	}
+	
+	public int getFire() {
+		return fire; 
+	}
+	public int getMaxFire() { 
+		return maxFire;
+	}
+
+	public void setSoulBombing() { 
+		soulBombing = true;
+	}
+	public void setBigBanging() {
+		bigBanging = true;
 	}
 	
 	private void getNextPosition() {
@@ -53,11 +98,18 @@ public class Boss extends Enemy {
 				dx = maxSpeed;
 			}
 		}
-		
-		if(falling) {
-			dy += fallSpeed;
-		}
 	}
+	
+	private void soulBomb() {
+		currentAction = SOULBOMB;
+		currentAction = WALKING;
+	}
+	
+	private void bigBang() {
+		currentAction = BIGBANG;
+		currentAction = WALKING;
+	}
+	
 
 	@Override
 	public void update() {
@@ -69,10 +121,12 @@ public class Boss extends Enemy {
 		if(right && dx == 0) {
 			facingRight = right = false;
 			left = true;
+//			soulBomb();
 		}
 		else if(left && dx == 0) {
 			facingRight = right = true;
 			left = false;
+//			soulBomb();
 		}
 		
 		animation.update();
