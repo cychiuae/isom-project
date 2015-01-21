@@ -35,6 +35,8 @@ public class Boss extends Enemy {
 		
 		moveSpeed = 0.7;
 		maxSpeed = 1.5;
+		fallSpeed = 0.1;
+		maxFallSpeed = 10.0;
 
 		width = 40;
 		height = 50;
@@ -99,6 +101,10 @@ public class Boss extends Enemy {
 				soulBomb();
 				dx = maxSpeed;
 			}
+		}
+
+		if(falling) {
+			dy += fallSpeed;
 		}
 	}
 	
