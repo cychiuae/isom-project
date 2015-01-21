@@ -89,12 +89,14 @@ public class Boss extends Enemy {
 		if(left) {
 			dx -= moveSpeed;
 			if(dx < -maxSpeed) {
+				soulBomb();
 				dx = -maxSpeed;
 			}
 		}
 		else if(right) {
 			dx += moveSpeed;
 			if(dx > maxSpeed) {
+				soulBomb();
 				dx = maxSpeed;
 			}
 		}
@@ -102,18 +104,17 @@ public class Boss extends Enemy {
 	
 	private void soulBomb() {
 		currentAction = SOULBOMB;
-		currentAction = WALKING;
 	}
 	
 	private void bigBang() {
 		currentAction = BIGBANG;
-		currentAction = WALKING;
 	}
 	
 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
+		currentAction = WALKING;
 		getNextPosition();
 		checkTileMapCollision();
 		setPosition(xTemp, yTemp);
@@ -121,14 +122,13 @@ public class Boss extends Enemy {
 		if(right && dx == 0) {
 			facingRight = right = false;
 			left = true;
-//			soulBomb();
+			bigBang();
 		}
 		else if(left && dx == 0) {
 			facingRight = right = true;
 			left = false;
-//			soulBomb();
+			bigBang();
 		}
-		
 		animation.update();
 	}
 	
