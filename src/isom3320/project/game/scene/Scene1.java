@@ -26,6 +26,9 @@ public class Scene1 extends Scene {
 	private Background background;
 	private HUD hud;
 	private Dragon dragon;
+
+	private Boss b;
+	private Slugger s;
 	
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Explosion> explosions;
@@ -82,7 +85,6 @@ public class Scene1 extends Scene {
 
 	public void populateEnemies() {
 		enemies = new ArrayList<Enemy>();
-		Slugger s;
 		Point[] points = new Point[] {
 				new Point(200, 100),
 				new Point(860, 200),
@@ -96,7 +98,7 @@ public class Scene1 extends Scene {
 			enemies.add(s);
 		}
 		
-		Boss b = new Boss(tileMap);
+		b = new Boss(tileMap);
 		b.setPosition(3000, 100);
 		enemies.add(b);
 	}
@@ -110,6 +112,10 @@ public class Scene1 extends Scene {
 
 		if(dragon.isDead()) {
 			SceneManager.getInstance().changeScene(SceneLevel.GAMEOVER);
+		}
+		
+		if(b.isDead()) {
+			SceneManager.getInstance().changeScene(SceneLevel.WIN);
 		}
 		
 		dragon.update();

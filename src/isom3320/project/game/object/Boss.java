@@ -43,7 +43,7 @@ public class Boss extends Enemy {
 		collisionWidth = 30;
 		collisionHeight = 40;
 
-		hp = maxHp = 50;
+		hp = maxHp = 5;
 		damage = 3;
 		fire = maxFire = 2500;
 

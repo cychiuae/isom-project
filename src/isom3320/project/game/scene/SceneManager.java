@@ -10,7 +10,8 @@ public class SceneManager {
 		MENU(0),
 		LEVEL1(1),
 		HIGHESTSCORE(2),
-		GAMEOVER(3);
+		GAMEOVER(3),
+		WIN(4);
 		
 		private int level;
 		
@@ -40,6 +41,7 @@ public class SceneManager {
 		scenes.add(new Scene1());
 		scenes.add(new HighScoreScene());
 		scenes.add(new GameOverScene());
+		scenes.add(new WinScene());
 	}
 	
 	public SceneLevel getCurrentSceneLevel() {
