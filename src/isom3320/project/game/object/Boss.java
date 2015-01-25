@@ -10,16 +10,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Boss extends Enemy {
-	private int fire;
-	private int maxFire;
-
 	private boolean soulBombing;
 	private int soulBombingDamage;
 	private FireBall soulBomb;
 
-	private boolean bigBanging;
-	private int bigBangDamage;
-	private int bigBangRange;
+//	private boolean bigBanging;
+//	private int bigBangDamage;
+//	private int bigBangRange;
 
 	private ArrayList<BufferedImage[]> sprites;
 	private final int[] numFrames;
@@ -45,10 +42,8 @@ public class Boss extends Enemy {
 
 		hp = maxHp = 5;
 		damage = 3;
-		fire = maxFire = 2500;
 
 		soulBombingDamage = 5;
-		soulBomb = new FireBall(tm, bigBanging);
 		
 		right = false;
 		left = true;
@@ -72,20 +67,13 @@ public class Boss extends Enemy {
 		animation.setFrames(sprites.get(WALKING));
 		animation.setDelay(400);
 	}
-	
-	public int getFire() {
-		return fire; 
-	}
-	public int getMaxFire() { 
-		return maxFire;
-	}
 
 	public void setSoulBombing() { 
 		soulBombing = true;
 	}
-	public void setBigBanging() {
-		bigBanging = true;
-	}
+//	public void setBigBanging() {
+//		bigBanging = true;
+//	}
 	
 	private void getNextPosition() {
 		if(left) {

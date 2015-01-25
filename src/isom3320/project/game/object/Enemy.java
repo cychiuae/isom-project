@@ -5,9 +5,6 @@ import isom3320.project.game.TileMap.TileMap;
 abstract public class Enemy extends Character {
 	protected int damage;
 	
-	protected boolean flinching;
-	protected long flinchTimer;
-	
 	public Enemy(TileMap tm) {
 		super(tm);
 	}
