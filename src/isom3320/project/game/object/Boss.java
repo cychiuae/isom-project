@@ -96,14 +96,13 @@ public class Boss extends Enemy {
 		}
 	}
 	
-	private void soulBomb() {
+	public void soulBomb() {
 		currentAction = SOULBOMB;
 	}
 	
-	private void bigBang() {
-		currentAction = BIGBANG;
-	}
-	
+//	public void bigBang() {
+//		currentAction = BIGBANG;
+//	}
 
 	@Override
 	public void update() {
@@ -116,12 +115,12 @@ public class Boss extends Enemy {
 		if(right && dx == 0) {
 			facingRight = right = false;
 			left = true;
-			bigBang();
+//			bigBang();
 		}
 		else if(left && dx == 0) {
 			facingRight = right = true;
 			left = false;
-			bigBang();
+//			bigBang();
 		}
 		animation.update();
 	}
