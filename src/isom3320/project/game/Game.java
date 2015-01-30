@@ -8,8 +8,9 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
 public class Game {
+	public static JFrame GameFrame;
 	public static void main(String[] args) {
-		JFrame GameFrame = new JFrame("Game Panel");
+		GameFrame = new JFrame("Game Panel");
 		GameFrame.setContentPane(new GamePanel());
 		GameFrame.setResizable(false);
 		GameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

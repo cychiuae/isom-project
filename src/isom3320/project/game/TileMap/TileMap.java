@@ -115,8 +115,13 @@ public class TileMap {
 	public int getWidth() { 
 		return width; 
 	}
+	
 	public int getHeight() { 
 		return height; 
+	}
+	
+	public int[][] getMap() {
+		return map;
 	}
 
 	public int getTileType(int row, int col) {

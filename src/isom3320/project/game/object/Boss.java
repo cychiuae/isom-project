@@ -15,15 +15,18 @@ public class Boss extends Enemy {
 	public Boss(TileMap tm) {
 		super(tm);
 		
-		moveSpeed = 0.7;
-		maxSpeed = 4;
-		fallSpeed = 0.01;
+		moveSpeed = 0;
+		maxSpeed = 0;
+		fallSpeed = 0.05;
 		maxFallSpeed = 10.0;
+		jumpStart = 0.5;
+		
+		jumping = true;
 
-		width = 60;
-		height = 60;
-		collisionHeight = 46;
-		collisionWidth = 58;
+		width = 48;
+		height = 64;
+		collisionHeight = 63;
+		collisionWidth = 50;
 
 		hp = maxHp = 5;
 		damage = 3;
@@ -41,13 +44,13 @@ public class Boss extends Enemy {
 	}
 	
 	private void getNextPosition() {
-		if(left) {
+		/*if(left) {
 			dx -= moveSpeed;
 			if(dx < -maxSpeed) {
 				dx = -maxSpeed;
 			}
-		}
-		else if(right) {
+		}*/
+		if(right) {
 			dx += moveSpeed;
 			if(dx > maxSpeed) {
 				dx = maxSpeed;
@@ -56,6 +59,14 @@ public class Boss extends Enemy {
 		
 		if(falling) {
 			dy += fallSpeed;
+			
+			if(dy < 0 && !jumping) {
+				dy += stopJumpSpeed;
+			}
+
+			if(dy > maxFallSpeed) {
+				dy = maxFallSpeed;
+			}
 		}
 	}
 
@@ -70,10 +81,10 @@ public class Boss extends Enemy {
 			facingRight = right = false;
 			left = true;
 		}
-		else if(left && dx == 0) {
+		/*else if(left && dx == 0) {
 			facingRight = right = true;
 			left = false;
-		}
+		}*/
 		
 		animation.update();
 	}

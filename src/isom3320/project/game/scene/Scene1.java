@@ -4,6 +4,7 @@ import isom3320.project.game.GamePanel;
 import isom3320.project.game.HUD;
 import isom3320.project.game.TileMap.Background;
 import isom3320.project.game.TileMap.TileMap;
+import isom3320.project.game.object.Boss;
 import isom3320.project.game.object.Dragon;
 import isom3320.project.game.object.Enemy;
 import isom3320.project.game.object.Explosion;
@@ -11,6 +12,7 @@ import isom3320.project.game.object.Slugger;
 import isom3320.project.game.scene.SceneManager.SceneLevel;
 import isom3320.project.game.score.Score;
 import isom3320.project.game.score.ScoreSystem;
+import isom3320.project.game.utiliy.Multimedia;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -19,13 +21,15 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import javafx.scene.media.MediaPlayer;
+
 public class Scene1 extends Scene {
 
 	private TileMap tileMap;
 	private Background background;
 	private HUD hud;
 	private Dragon dragon;
-	
+
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Explosion> explosions;
 
@@ -34,6 +38,8 @@ public class Scene1 extends Scene {
 
 	private int currentOption;
 	private String[] menuOption;
+
+	private MediaPlayer mediaPlayer;
 
 	private boolean inited;
 	private boolean stop;
@@ -76,6 +82,7 @@ public class Scene1 extends Scene {
 		if(inited) {
 			ScoreSystem.getInstance().addScoreRecord(score);
 		}
+
 		inited = true;
 	}
 
@@ -94,9 +101,9 @@ public class Scene1 extends Scene {
 			s.setPosition(points[i].x, points[i].y);
 			enemies.add(s);
 		}
-		
+
 		Boss b = new Boss(tileMap);
-		b.setPosition(3000, 100);
+		b.setPosition(3150, 100);
 		enemies.add(b);
 	}
 
@@ -110,7 +117,7 @@ public class Scene1 extends Scene {
 		if(dragon.isDead()) {
 			SceneManager.getInstance().changeScene(SceneLevel.GAMEOVER);
 		}
-		
+
 		dragon.update();
 		tileMap.setPosition(GamePanel.WIDTH / 2 - dragon.getXPosition(), GamePanel.HEIGHT / 2 - dragon.getYPosition());
 		background.setPosition(tileMap.getXPosition(), tileMap.getYPosition());
@@ -127,13 +134,24 @@ public class Scene1 extends Scene {
 				explosions.add(new Explosion(e.getXPosition(), e.getYPosition()));
 			}
 		}
-		
+
 		for(int i = 0; i < explosions.size(); i++) {
 			explosions.get(i).update();
 			explosions.get(i).setMapPosition((int)tileMap.getXPosition(), (int)tileMap.getYPosition());
 			if(explosions.get(i).shouldRemove()) {
 				explosions.remove(i);
 				i--;
+			}
+		}
+
+		if(dragon.getXPosition() >= 2925) {
+			int[][] map = tileMap.getMap();
+			for(int i = 5; i < 7; i++) {
+				map[i][94] = 3;
+				map[i][97] = 4;
+
+				map[i][95] = 22;
+				map[i][96] = 22;
 			}
 		}
 	}
@@ -144,7 +162,7 @@ public class Scene1 extends Scene {
 		background.draw(g2d);
 		tileMap.draw(g2d);
 		dragon.draw(g2d);
-		
+
 		for(int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).draw(g2d);
 		}
@@ -192,40 +210,40 @@ public class Scene1 extends Scene {
 		dragon.keyPressed(k);
 
 		switch(k.getKeyCode()) {
-			case KeyEvent.VK_ESCAPE:
-				stop = !stop;
-				if(stop) {
+		case KeyEvent.VK_ESCAPE:
+			stop = !stop;
+			if(stop) {
+				currentOption = 0;
+			}
+			break;
+		case KeyEvent.VK_UP:
+			if(stop) {
+				currentOption--;
+				if(currentOption == -1) {
+					currentOption = menuOption.length - 1;
+				}
+			}
+			break;
+		case KeyEvent.VK_DOWN:
+			if(stop) {
+				currentOption++;
+				if(currentOption >= menuOption.length) {
 					currentOption = 0;
 				}
-				break;
-			case KeyEvent.VK_UP:
-				if(stop) {
-					currentOption--;
-					if(currentOption == -1) {
-						currentOption = menuOption.length - 1;
-					}
+			}
+			break;
+
+		case KeyEvent.VK_ENTER:
+			if(stop) {
+				stop = !stop;
+				if(currentOption == 1) {
+					SceneManager.getInstance().changeScene(SceneLevel.LEVEL1);
 				}
-				break;
-			case KeyEvent.VK_DOWN:
-				if(stop) {
-					currentOption++;
-					if(currentOption >= menuOption.length) {
-						currentOption = 0;
-					}
+				if(currentOption == menuOption.length - 1) {
+					SceneManager.getInstance().changeScene(SceneLevel.MENU);
 				}
-				break;
-				
-			case KeyEvent.VK_ENTER:
-				if(stop) {
-					stop = !stop;
-					if(currentOption == 1) {
-						SceneManager.getInstance().changeScene(SceneLevel.LEVEL1);
-					}
-					if(currentOption == menuOption.length - 1) {
-						SceneManager.getInstance().changeScene(SceneLevel.MENU);
-					}
-				}
-				break;
+			}
+			break;
 		}
 	}
 

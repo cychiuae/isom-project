@@ -33,6 +33,6 @@ public class HUD {
 		g2d.drawString(dragon.getFire() / 100 + "/" + dragon.getMaxFire() / 100, 30, 45);
 		
 		g2d.drawString(score.toString(), GamePanel.WIDTH - 75, 25);
-		g2d.drawString(String.valueOf(dragon.getXPosition()), GamePanel.WIDTH - 75, 100);
+		//g2d.drawString(String.valueOf(dragon.getXPosition()), GamePanel.WIDTH - 75, 100);
 	}
 }

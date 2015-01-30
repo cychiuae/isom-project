@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import javafx.scene.media.Media;
+
 import javax.imageio.ImageIO;
 
 public class Multimedia {
@@ -22,6 +24,13 @@ public class Multimedia {
 		}
 		
 		return image;
+	}
+	
+	public static Media getMusicByName(String musicName) {
+		Media music = null;
+		String musicUri = new File(resourcesDir + musicName).toURI().toString();
+		music = new Media(musicUri);
+		return music;
 	}
 	
 }

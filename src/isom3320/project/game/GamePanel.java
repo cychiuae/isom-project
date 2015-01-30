@@ -58,14 +58,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		long start;
 		long elapsed;
 		long wait;
-		
+		int updates = 0;
+		long timer = System.currentTimeMillis();
 		while(running) {
 			start = System.nanoTime();
 			
 			update();
 			draw();
 			drawToScreen();
-			
+			updates++;
 			elapsed = System.nanoTime() - start;
 			
 			wait = targetTime - elapsed / 1000000;
@@ -79,6 +80,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 			catch(Exception e) {
 				System.out.println(e);
 				e.printStackTrace();
+			}
+			
+			if(System.currentTimeMillis() - timer > 1000) {
+				timer += 1000;
+				Game.GameFrame.setTitle("HIHIHI Game       |       FPS:" + updates);
+				updates=0;
 			}
 		}
 	}
