@@ -11,7 +11,7 @@ import java.util.Comparator;
 
 public class ScoreSystem {
 	private static ScoreSystem instance;
-	private static final String scoreFile = "scores.txt";
+	private static final String SCOREFILE = "scores.txt";
 	
 	private ArrayList<Score> scores;
 	
@@ -29,7 +29,7 @@ public class ScoreSystem {
 	
 	private void readScoreFile() {
 		try {
-			File f = new File(scoreFile);
+			File f = new File(SCOREFILE);
 			if(f.isFile()) {
 				BufferedReader br = new BufferedReader(new FileReader(f));
 				
@@ -50,7 +50,7 @@ public class ScoreSystem {
 	
 	public void saveScoreFile() {
 		try {
-			PrintWriter writer = new PrintWriter(scoreFile, "UTF-8");
+			PrintWriter writer = new PrintWriter(SCOREFILE, "UTF-8");
 			
 			for(Score s : scores) {
 				writer.println(s.getPlayerName() + " , " + s.getScore());

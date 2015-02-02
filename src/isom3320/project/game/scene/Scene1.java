@@ -4,7 +4,7 @@ import isom3320.project.game.GamePanel;
 import isom3320.project.game.HUD;
 import isom3320.project.game.TileMap.Background;
 import isom3320.project.game.TileMap.TileMap;
-import isom3320.project.game.object.Boss;
+
 import isom3320.project.game.object.Dragon;
 import isom3320.project.game.object.Enemy;
 import isom3320.project.game.object.Explosion;
@@ -29,6 +29,7 @@ public class Scene1 extends Scene {
 	private Background background;
 	private HUD hud;
 	private Dragon dragon;
+	private Slugger s;
 
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Explosion> explosions;
@@ -88,7 +89,6 @@ public class Scene1 extends Scene {
 
 	public void populateEnemies() {
 		enemies = new ArrayList<Enemy>();
-		Slugger s;
 		Point[] points = new Point[] {
 				new Point(200, 100),
 				new Point(860, 200),
@@ -101,10 +101,11 @@ public class Scene1 extends Scene {
 			s.setPosition(points[i].x, points[i].y);
 			enemies.add(s);
 		}
-
-		Boss b = new Boss(tileMap);
-		b.setPosition(3150, 100);
-		enemies.add(b);
+		
+//		b = new Boss(tileMap);
+//		b.setPosition(3000, 100);
+//
+//		enemies.add(b);
 	}
 
 	@Override
